@@ -6,12 +6,15 @@ while [ $n -le 19 ]
 do
 	case $n in
 	3)
+		echo "$n"
 		echo "bad luck from China"
 		;;
 	8)
+		echo "$n"
 		echo "bad luck from Japan"
 		;;
 	16)
+		echo "$n"
 		echo "bad luck from Italy"
 		;;
 	*)
