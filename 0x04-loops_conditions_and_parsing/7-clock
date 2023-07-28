@@ -2,7 +2,7 @@
 # This script displays the time for 12 hours and 59 minutes.
 
 hr=0
-while [ $hour -lt 12 ];
+while [ $hr -lt 12 ];
 do
 	echo "Hr: $hr"
 		for min in {1..59};
