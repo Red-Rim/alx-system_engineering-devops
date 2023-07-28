@@ -2,16 +2,16 @@
 # This script displays numbers from 1 to 20 and shows superstitious messages for specific iterations.
 
 n=0
-while [ $n -le 20 ]
+while [ $n -le 19 ]
 do
 	case $n in
-	4)
+	3)
 		echo "bad luck from China"
 		;;
-	9)
+	8)
 		echo "bad luck from Japan"
 		;;
-	17)
+	16)
 		echo "bad luck from Italy"
 		;;
 	*)
