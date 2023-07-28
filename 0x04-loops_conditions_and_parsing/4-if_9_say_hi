@@ -2,7 +2,7 @@
 # this script that displays Best School 10 times, but for the 9th iteration, displays Best School and then Hi on a new line
 
 n=0
-while [ $n -le 10 ];
+while [ $n -lt 10 ]
 do
 	echo "Best School"
 
