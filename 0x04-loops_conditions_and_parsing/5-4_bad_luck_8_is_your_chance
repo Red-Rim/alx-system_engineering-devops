@@ -4,13 +4,13 @@
 n=0
 while [ $n -lt 10 ]
 do
-	echo "Best School"
-
 	if [ $n -eq 3 ]
 
 		echo "bad luck"
 	elif [ $n -eq 7 ]
 		echo "good luck"
+	else
+		echo "Best School"
 	fi
 	((n++))
 done
