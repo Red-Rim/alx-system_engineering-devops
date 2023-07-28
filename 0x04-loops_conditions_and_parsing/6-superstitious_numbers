@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # This script displays numbers from 1 to 20 and shows superstitious messages for specific iterations.
 
-n=0
-while [ $n -le 19 ]
+n=1
+while [ $n -le 20 ]
 do
 	case $n in
-	3)
+	4)
 		echo "$n"
 		echo "bad luck from China"
 		;;
-	8)
+	9)
 		echo "$n"
 		echo "bad luck from Japan"
 		;;
-	16)
+	17)
 		echo "$n"
 		echo "bad luck from Italy"
 		;;
