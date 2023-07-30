@@ -21,5 +21,5 @@ do
 		echo $num
 	fi
 
-	(( c++ ))
+	(( num++ ))
 done
