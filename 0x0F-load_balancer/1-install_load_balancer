@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Check if HAProxy is installed
+if ! command -v haproxy &> /dev/null
+then
+    # Install HAProxy
+    sudo apt update
+    sudo apt install haproxy -y
+fi
+# Append HAProxy configuration
+sudo sh -c 'echo -e "\nlisten myserver\n\tbind *:80\n\tbalance roundrobin\n\tserver server1 54.86.28.7-web-01:80 check\n\tserver server2 18.209.179.109-web-02:80 check\n" >> /etc/haproxy/haproxy.cfg'
+sudo service haproxy restart
+
