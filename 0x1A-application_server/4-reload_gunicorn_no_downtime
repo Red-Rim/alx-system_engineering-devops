@@ -4,6 +4,12 @@
 # Find the PID of the Gunicorn master process
 pid=$(pgrep gunicorn)
 
-# Send the USR2 signal to the master process to gracefully reload configurations
-kill -s USR2 $pid
+if [[ -n $pid ]]; then
+    # Send the USR2 signal to the master process to gracefully reload configurations
+    kill -s USR2 "$pid"
+    echo "Gunicorn configurations reloaded and workers restarted gracefully."
+else
+    echo "Gunicorn master process not found. Check if Gunicorn is running."
+    exit 1
+fi
 
