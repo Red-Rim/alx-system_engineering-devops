@@ -1,15 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# No service interruption
 
-# Retrieve the PID of the master Gunicorn process
-MASTER_PID=$(pgrep -f 'gunicorn.*master')
-
-# Gracefully reload Gunicorn
-if [ -n "$MASTER_PID" ]; then
-    echo "Reloading Gunicorn gracefully..."
-    # Send SIGUSR1 signal to the master process to gracefully reload workers
-    kill -s USR1 $MASTER_PID
-    echo "Gunicorn reloaded successfully."
-else
-    echo "No master Gunicorn process found."
-fi
-
+pgrep gunicorn | xargs -I {} kill -HUP {}
