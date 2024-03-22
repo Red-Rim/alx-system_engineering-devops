@@ -1,7 +1,12 @@
 #!/usr/bin/python3
-"""Function to query subscribers on a given Reddit subreddit."""
+"""
+Module-level documentation.
+"""
 
 import requests
+
+headers = {"User-Agent": "MyCustomUserAgent/1.0"}
+
 
 def number_of_subscribers(subreddit):
     """
@@ -11,18 +16,15 @@ def number_of_subscribers(subreddit):
         subreddit (str): The name of the subreddit.
 
     Returns:
-        int: The total number of subscribers. Returns 0 if the subreddit is invalid.
+        int: The total number of subscribers. Returns 0 if the subreddit is invalid or not found.
     """
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {
-        "User-Agent": "underscoDe@alx-holbertonschool"
-    }
-    response = requests.get(url, headers=headers, allow_redirects=False)
-    if response.status_code == 404:
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    response = requests.get(url, allow_redirects=False, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        return data["data"]["subscribers"]
+    elif response.status_code == 404:
         return 0
-    results = response.json().get("data")
-    return results.get("subscribers")
-
-if __name__ == "__main__":
-    number_of_subscribers = __import__('0-subs').number_of_subscribers
-
+    else:
+        # Handle other potential error cases gracefully
+        return 0
