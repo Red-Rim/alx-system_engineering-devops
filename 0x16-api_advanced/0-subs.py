@@ -1,18 +1,22 @@
 #!/usr/bin/python3
-"""
-this doc for module
-"""
+"""How many subs"""
 import requests
-
-headers = {"User-Agent": "MyCustomUserAgent/1.0"}
 
 
 def number_of_subscribers(subreddit):
-    """method doc"""
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    response = requests.get(url, allow_redirects=False, headers=headers)
-    if response.status_code == 200:
+    """Returns the number of subscribers"""
+    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    headers = {'User-Agent': 'Chrome'}
+
+    try:
+        response = requests.get(url, headers=headers)
+
         data = response.json()
-        return data["data"]["subscribers"]
-    else:
-        return 0
+        find_subscribers = data.get("data", {}).get("subscribers", 0)
+        return find_subscribers
+    except requests.HTTPError as e:
+        if e.response.status_code == 404:
+            return 0
+        else:
+            return 0
+            
