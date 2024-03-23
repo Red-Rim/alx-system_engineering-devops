@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
-# No service interruption
+# Script for reloading Gunicorn without service interruption
 
+# Gracefully reload Gunicorn
 pgrep gunicorn | xargs -I {} kill -HUP {}
+
+# Ensure a newline at the end of the file
+echo ""
+
