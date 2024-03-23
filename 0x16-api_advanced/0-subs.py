@@ -1,43 +1,34 @@
 #!/usr/bin/python3
-"""
-Function that queries the Reddit API and returns the number of subscribers.
-If an invalid subreddit is given, the function should return 0.
-"""
-
+"""Function to query subscribers on a given Reddit subreddit"""
 import requests
+import sys
 
 
 def number_of_subscribers(subreddit):
-    """
-    Queries the Reddit API and returns the number of subscribers
-    for a given subreddit.
-
-    Args:
-        subreddit (str): The name of the subreddit.
-
-    Returns:
-        int: The number of subscribers for the subreddit.
-        If the subreddit is not valid, returns 0.
-    """
-
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {"User-Agent": "Custom"}
-
+    """Return the total number of subscribers on a given subreddit"""
     try:
-
+        url = ("https://www.reddit.com/r/{}/"
+               "about.json").format(subreddit)
+        headers = {
+            "User-Agent": "Linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
+        }
         response = requests.get(url, headers=headers, allow_redirects=False)
-
-        print("API Request URL:", url)
-        print("API Response Content:", response.content)
-
-        if response.status_code == 200:
-            return response.json()["data"]["subscribers"]
+        response.raise_for_status()  # Raise exception for non-200 status codes
+        data = response.json().get("data")
+        return data.get("subscribers")
+    except requests.exceptions.RequestException as e:
+        if isinstance(e, requests.exceptions.HTTPError) and \
+                e.response.status_code == 404:
+            print(f"Error: Subreddit '{subreddit}' not found.")
         else:
-            return 0
-    except requests.RequestException:
-
+            print("Error connecting to Reddit's API:", e)
         return 0
 
 
-subreddit = "python"
-print("Number of subscribers for r/python:", number_of_subscribers(subreddit))
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        subreddit = sys.argv[1]
+        subscribers = number_of_subscribers(subreddit)
+        print(f"Number of subscribers for '{subreddit}': {subscribers}")
